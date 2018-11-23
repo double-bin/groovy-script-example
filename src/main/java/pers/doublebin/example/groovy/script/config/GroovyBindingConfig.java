@@ -14,22 +14,23 @@ public class GroovyBindingConfig implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
-    @Bean("groovyBinding")
+    //@Bean("groovyBinding")
     public Binding groovyBinding() {
         Binding groovyBinding = new Binding();
 
         Map<String, Object> beanMap = applicationContext.getBeansOfType(Object.class);
+        //遍历设置所有bean,可以根据需求在循环中对bean做过滤
         for (String beanName : beanMap.keySet()) {
             groovyBinding.setVariable(beanName, beanMap.get(beanName));
         }
         return groovyBinding;
     }
 
-    /*@Bean("groovyBinding1")
+    @Bean("groovyBinding1")
     public Binding groovyBinding1() {
         Map<String, Object> beanMap = applicationContext.getBeansOfType(Object.class);
-        return new Binding(beanMap);
-    }*/
+        return new Binding(beanMap); //如果不需要对bean做过滤，直接用beanMap构造Binding对象即可
+    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
